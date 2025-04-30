@@ -57,20 +57,11 @@ export default class LevelFile {
             throw new Error('Unknown music option: ' + name);
         }
 
-        const oldMusic = this.getLevelMusic();
         const offset = this.file.getValueOffset(LevelFile.HDR_MUSIC) + 5;
-        const delta = cfg.music.length - oldMusic.length;
 
-        this.file.replaceString(offset, cfg.music);
-
-        const adjustOffsets = [
-            0x55,
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS),
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS) + 5,
-            this.file.getValueOffset(LevelFile.HDR_MUSIC),
-        ];
-
-        adjustOffsets.forEach(pos => this.file.modifyInteger(pos, delta));
+        this.#replaceStringWithAdjustments(offset, cfg.music, this.#createStringAdjustOffsets([
+            offset - 5,
+        ]));
     }
 
     getTerrain() {
@@ -102,20 +93,11 @@ export default class LevelFile {
             throw new Error('Unknown terrain option: ' + name);
         }
 
-        const currentTerrainString = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[this.getTerrain()].terrain;
         const offset = this.getTerrainOffset();
-        const delta = cfg.terrain.length - currentTerrainString.length;
 
-        this.file.replaceString(offset, cfg.terrain);
-
-        const adjustOffsets = [
-            0x55,
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS),
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS) + 5,
+        this.#replaceStringWithAdjustments(offset, cfg.terrain, this.#createStringAdjustOffsets([
             offset - 6,
-        ];
-
-        adjustOffsets.forEach(pos => this.file.modifyInteger(pos, delta));
+        ]));
     }
 
     getVegetation() {
@@ -147,23 +129,32 @@ export default class LevelFile {
             throw new Error('Unknown vegetation option: ' + name);
         }
 
-        const currentVegEnumString = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[this.getTerrain()].vegEnum;
         const offset = this.getVegetationOffset();
-        const delta = cfg.vegEnum.length - currentVegEnumString.length;
 
-        this.file.replaceString(offset, cfg.vegEnum);
-
-        const adjustOffsets = [
-            0x55,
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS),
-            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS) + 5,
+        this.#replaceStringWithAdjustments(offset, cfg.vegEnum, this.#createStringAdjustOffsets([
             offset - 5,
-        ];
-
-        adjustOffsets.forEach(pos => this.file.modifyInteger(pos, delta));
+        ]));
     }
 
     getArrayBuffer() {
         return this.file.getArrayBuffer();
+    }
+
+    #replaceStringWithAdjustments(offset, replacement, adjustOffsets) {
+        const currentString = this.file.readString(offset);
+        const delta = replacement.length - currentString.length;
+
+        this.file.replaceString(offset, replacement);
+
+        adjustOffsets.forEach(pos => this.file.modifyInteger(pos, delta));
+    }
+
+    #createStringAdjustOffsets(additionalAdjustments = []) {
+        return [
+            0x55,
+            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS),
+            this.file.getValueOffset(LevelFile.HDR_ACTOR_PROPS) + 5,
+            ...additionalAdjustments,
+        ];
     }
 }
