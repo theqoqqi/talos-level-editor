@@ -15,46 +15,37 @@ const levelPropertyEditors = [
     new IntegerPropertyEditor({
         input: 'terrain-width',
         button: 'set-level-size-x-button',
-        reader: level => level.getWidth(),
-        writer: (level, v) => level.setWidth(v),
-        availabilityChecker: level => level.hasWidth(),
+        propertyGetter: level => level.width,
     }),
 
     new IntegerPropertyEditor({
         input: 'terrain-height',
         button: 'set-level-size-y-button',
-        reader: level => level.getHeight(),
-        writer: (level, v) => level.setHeight(v),
-        availabilityChecker: level => level.hasHeight(),
+        propertyGetter: level => level.height,
     }),
 
     new FloatPropertyEditor({
         input: 'fog-density',
         button: 'set-fog-density-button',
-        reader: level => level.getFogDensity(),
-        writer: (level, v) => level.setFogDensity(v),
-        availabilityChecker: level => level.hasFogDensity(),
+        propertyGetter: level => level.fogDensity,
     }),
 
     new EnumPropertyEditor({
         input: 'level-music-select',
         button: 'set-music-button',
-        reader: level => level.getMusic(),
-        writer: (level, v) => level.setMusic(v),
+        propertyGetter: level => level.music,
     }),
 
     new EnumPropertyEditor({
         input: 'terrain-select',
         button: 'set-terrain-button',
-        reader: level => level.getTerrain(),
-        writer: (level, v) => level.setTerrain(v),
+        propertyGetter: level => level.terrain,
     }),
 
     new EnumPropertyEditor({
         input: 'vegetation-select',
         button: 'set-vegetation-button',
-        reader: level => level.getVegetation(),
-        writer: (level, v) => level.setVegetation(v),
+        propertyGetter: level => level.vegetation,
     }),
 ];
 

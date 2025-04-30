@@ -1,18 +1,12 @@
 
 export default class PropertyEditor {
 
-    #reader;
+    #propertyGetter;
 
-    #writer;
-
-    #availabilityChecker;
-
-    constructor({ input, button, reader, writer, availabilityChecker }) {
+    constructor({ input, button, propertyGetter }) {
         this.input = document.getElementById(input) || input;
         this.button = document.getElementById(button) || button;
-        this.#reader = reader;
-        this.#writer = writer;
-        this.#availabilityChecker = availabilityChecker ?? (() => true);
+        this.#propertyGetter = propertyGetter;
         this._bindApply();
     }
 
@@ -42,11 +36,11 @@ export default class PropertyEditor {
     }
 
     readFromLevel() {
-        return this.#reader(this.levelFile);
+        return this.#getProperty().get();
     }
 
     writeToLevel(value) {
-        this.#writer(this.levelFile, value);
+        this.#getProperty().set(value);
     }
 
     getValue() {
@@ -62,6 +56,10 @@ export default class PropertyEditor {
     }
 
     isUnavailable() {
-        return !this.#availabilityChecker(this.levelFile);
+        return !this.#getProperty().exists();
+    }
+
+    #getProperty() {
+        return this.#propertyGetter(this.levelFile);
     }
 }
