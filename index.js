@@ -16,6 +16,7 @@ const levelPropertyEditors = [
         button: 'set-level-size-x-button',
         reader: level => level.getWidth(),
         writer: (level, v) => level.setWidth(v),
+        availabilityChecker: level => level.hasWidth(),
     }),
 
     new NumberPropertyEditor({
@@ -23,6 +24,7 @@ const levelPropertyEditors = [
         button: 'set-level-size-y-button',
         reader: level => level.getHeight(),
         writer: (level, v) => level.setHeight(v),
+        availabilityChecker: level => level.hasHeight(),
     }),
 
     new NumberPropertyEditor({
@@ -30,6 +32,7 @@ const levelPropertyEditors = [
         button: 'set-fog-density-button',
         reader: level => level.getFogDensity(),
         writer: (level, v) => level.setFogDensity(v),
+        availabilityChecker: level => level.hasFogDensity(),
     }),
 
     new EnumPropertyEditor({
