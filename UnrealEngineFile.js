@@ -80,11 +80,19 @@ export default class UnrealEngineFile {
         return this.readString(offset);
     }
 
-    readString(offset) {
+    readString(offset, defaultValue) {
         const len = this.view.getUint32(offset, true);
         const bytes = this.buffer.slice(offset + 4, offset + 4 + len);
 
-        return new TextDecoder().decode(bytes).replace(/\x00$/, '');
+        if (bytes[bytes.length - 1] === 0) {
+            return new TextDecoder().decode(bytes).replace(/\x00$/, '');
+        }
+
+        if (defaultValue === undefined) {
+            throw new Error('Invalid string: missing null terminator');
+        }
+
+        return defaultValue;
     }
 
     removeString(offset) {
