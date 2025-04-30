@@ -22,17 +22,19 @@ No software installation is required — everything runs right in your browser.
 ## How to Use
 
 1. **Load Your File**
-   - Click on the file box or drag your ``.level`` file onto the page.
+   - Click on the file box or drag your `.level` file onto the page.
 2. **Tweak Settings**
    - Numeric values (e.g., width, height, fog) can be typed in or adjusted in steps.
    - Choose from dropdowns for music, terrain style, and vegetation.
-   - Click the **Set** button next to each field to apply changes.
+   - Click the **Apply** button next to modified field to apply changes.
 3. **Download**
-   - When you’re happy with your edits, hit **Download** to get your updated ``.level`` file.
+   - When you’re happy with your edits, hit **Download** to get your updated `.level` file.
 
 ### Tips
 * Large maps with heavy vegetation may crash your game or load very slowly.
+* Even if you disable vegetation, don't make maps too large. It may load very slowly.
 * Removed vegetation can't be restored — make sure you really want to clear it.
+* Fog value in the in-game editor is scaled approximately by 10, so 0.05 is about 0.5 in game. 
 
 ---
 
