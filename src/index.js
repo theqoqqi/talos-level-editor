@@ -3,6 +3,7 @@ import FloatPropertyEditor from './editors/FloatPropertyEditor.js';
 import IntegerPropertyEditor from './editors/IntegerPropertyEditor.js';
 import EnumPropertyEditor from './editors/EnumPropertyEditor.js';
 import DoublePropertyEditor from './editors/DoublePropertyEditor.js';
+import setupDragAndDrop from './utils.js';
 
 const ui = {
     fileInput: document.getElementById('file-input'),
@@ -55,6 +56,8 @@ const levelPropertyEditors = [
 ];
 
 ui.controls.style.display = 'none';
+
+setupDragAndDrop(ui.fileInput);
 
 ui.fileInput.addEventListener('change', async e => {
     const file = e.target.files[0];
