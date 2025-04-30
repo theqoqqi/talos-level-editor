@@ -14,50 +14,42 @@ let levelFile;
 
 const levelPropertyEditors = [
     new IntegerPropertyEditor({
-        input: 'terrain-width',
-        button: 'set-level-size-x-button',
+        container: 'level-width-property',
         propertyGetter: level => level.width,
     }),
 
     new IntegerPropertyEditor({
-        input: 'terrain-height',
-        button: 'set-level-size-y-button',
+        container: 'level-height-property',
         propertyGetter: level => level.height,
     }),
 
     new FloatPropertyEditor({
-        input: 'cloudiness-layer-1',
-        button: 'set-cloudiness-layer-1-button',
+        container: 'cloudiness-layer-1-property',
         propertyGetter: level => level.cloudinessLayer1,
     }),
 
     new DoublePropertyEditor({
-        input: 'cloudiness-layer-2',
-        button: 'set-cloudiness-layer-2-button',
+        container: 'cloudiness-layer-2-property',
         propertyGetter: level => level.cloudinessLayer2,
     }),
 
     new FloatPropertyEditor({
-        input: 'fog-density',
-        button: 'set-fog-density-button',
+        container: 'fog-density-property',
         propertyGetter: level => level.fogDensity,
     }),
 
     new EnumPropertyEditor({
-        input: 'level-music-select',
-        button: 'set-music-button',
+        container: 'music-property',
         propertyGetter: level => level.music,
     }),
 
     new EnumPropertyEditor({
-        input: 'terrain-select',
-        button: 'set-terrain-button',
+        container: 'terrain-property',
         propertyGetter: level => level.terrain,
     }),
 
     new EnumPropertyEditor({
-        input: 'vegetation-select',
-        button: 'set-vegetation-button',
+        container: 'vegetation-property',
         propertyGetter: level => level.vegetation,
     }),
 ];

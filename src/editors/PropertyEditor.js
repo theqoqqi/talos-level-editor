@@ -3,9 +3,10 @@ export default class PropertyEditor {
 
     #propertyGetter;
 
-    constructor({ input, button, propertyGetter }) {
-        this.input = document.getElementById(input) || input;
-        this.button = document.getElementById(button) || button;
+    constructor({ container, propertyGetter }) {
+        this.container = document.getElementById(container) || container;
+        this.input = this.container.querySelector('.property-input');
+        this.button = this.container.querySelector('.property-apply-button');
         this.#propertyGetter = propertyGetter;
         this._bindApply();
     }
