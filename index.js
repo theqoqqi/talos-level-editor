@@ -1,20 +1,44 @@
 import LevelFile from './LevelFile.js';
+import NumberPropertyEditor from './NumberPropertyEditor.js';
+import EnumPropertyEditor from './EnumPropertyEditor.js';
 
 const ui = {
     fileInput: document.getElementById('file-input'),
-    controlsContainer: document.getElementById('controls'),
-    fogDensityInput: document.getElementById('fog-density'),
-    musicSelect: document.getElementById('level-music-select'),
-    terrainSelect: document.getElementById('terrain-select'),
-    vegetationSelect: document.getElementById('vegetation-select'),
-    setFogDensityButton: document.getElementById('set-fog-density-button'),
-    setMusicButton: document.getElementById('set-music-button'),
-    setTerrainButton: document.getElementById('set-terrain-button'),
-    setVegetationButton: document.getElementById('set-vegetation-button'),
-    downloadButton: document.getElementById('download-button')
+    controls: document.getElementById('controls'),
+    downloadButton: document.getElementById('download-button'),
 };
 
 let levelFile;
+
+const levelPropertyEditors = [
+    new NumberPropertyEditor({
+        input: 'fog-density',
+        button: 'set-fog-density-button',
+        reader: level => level.getFogDensity(),
+        writer: (level, v) => level.setFogDensity(v),
+    }),
+
+    new EnumPropertyEditor({
+        input: 'level-music-select',
+        button: 'set-music-button',
+        reader: level => level.getMusic(),
+        writer: (level, v) => level.setMusic(v),
+    }),
+
+    new EnumPropertyEditor({
+        input: 'terrain-select',
+        button: 'set-terrain-button',
+        reader: level => level.getTerrain(),
+        writer: (level, v) => level.setTerrain(v),
+    }),
+
+    new EnumPropertyEditor({
+        input: 'vegetation-select',
+        button: 'set-vegetation-button',
+        reader: level => level.getVegetation(),
+        writer: (level, v) => level.setVegetation(v),
+    }),
+];
 
 ui.fileInput.addEventListener('change', async e => {
     const file = e.target.files[0];
@@ -25,28 +49,13 @@ ui.fileInput.addEventListener('change', async e => {
 
     levelFile = new LevelFile(await file.arrayBuffer());
 
-    ui.fogDensityInput.value = levelFile.getFogDensity().toFixed(4);
-    ui.musicSelect.value = levelFile.getMusic();
-    ui.terrainSelect.value = levelFile.getTerrain();
-    ui.vegetationSelect.value = levelFile.getVegetation();
+    levelPropertyEditors.forEach(propertyEditor => {
+        propertyEditor.attachLevel(levelFile);
+        propertyEditor.init(levelFile);
+    });
 
-    ui.fogDensityInput.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
-    ui.setFogDensityButton.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
-
-    ui.controlsContainer.style.display = 'block';
+    ui.controls.style.display = 'block';
 });
-
-ui.setFogDensityButton.addEventListener('click', () => {
-    const v = parseFloat(ui.fogDensityInput.value);
-
-    if (!isNaN(v)) {
-        levelFile.setFogDensity(v);
-    }
-});
-
-ui.setMusicButton.addEventListener('click', () => levelFile.setMusic(ui.musicSelect.value));
-ui.setTerrainButton.addEventListener('click', () => levelFile.setTerrain(ui.terrainSelect.value));
-ui.setVegetationButton.addEventListener('click', () => levelFile.setVegetation(ui.vegetationSelect.value));
 
 ui.downloadButton.addEventListener('click', () => {
     const blob = new Blob([levelFile.getArrayBuffer()], { type: 'application/octet-stream' });
