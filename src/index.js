@@ -54,10 +54,13 @@ const levelPropertyEditors = [
     }),
 ];
 
+ui.controls.style.display = 'none';
+
 ui.fileInput.addEventListener('change', async e => {
     const file = e.target.files[0];
 
     if (!file) {
+        ui.controls.style.display = 'none';
         return;
     }
 
@@ -68,7 +71,7 @@ ui.fileInput.addEventListener('change', async e => {
         propertyEditor.init(levelFile);
     });
 
-    ui.controls.style.display = 'block';
+    ui.controls.style.display = null;
 });
 
 ui.downloadButton.addEventListener('click', () => {

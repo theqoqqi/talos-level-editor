@@ -4,88 +4,101 @@
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Unreal .level Editor</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 2rem; }
-        label, input, select, button { display: block; margin-bottom: 1rem; }
-    </style>
+    <title>Talos .level Editor</title>
+    <link rel='stylesheet' href='css/style.css' />
 </head>
 <body>
-<h1>Unreal .level Editor</h1>
+<h1>Talos .level Editor</h1>
 <input type='file' id='file-input' accept='.level' />
-<div id='controls' style='display:none;'>
+<div id='controls'>
     <div id='level-width-property'>
-        <label>Level width:</label>
-        <input type='number' class='property-input' step='1' min='0' />
-        <button class='property-apply-button'>Set Terrain Width</button>
+        <div class='property-controls'>
+            <label>Level width:</label>
+            <input type='number' class='property-input' step='1' min='0' />
+            <button class='property-apply-button'>Apply</button>
+        </div>
         <span class='missing-value-warning'>
             Value is missing in .level file.
             Change value in editor to update level file.
         </span>
     </div>
     <div id='level-height-property'>
-        <label>Level length:</label>
-        <input type='number' class='property-input' step='1' min='0' />
-        <button class='property-apply-button'>Set Terrain Height</button>
+        <div class='property-controls'>
+            <label>Level length:</label>
+            <input type='number' class='property-input' step='1' min='0' />
+            <button class='property-apply-button'>Apply</button>
+        </div>
         <span class='missing-value-warning'>
             Value is missing in .level file.
             Change value in editor to update level file.
         </span>
     </div>
     <div id='cloudiness-layer-1-property'>
-        <label>Cloudiness layer 1:</label>
-        <input type='number' class='property-input' step='0.0001' />
-        <button class='property-apply-button'>Set Cloudiness Layer 1</button>
+        <div class='property-controls'>
+            <label>Cloudiness layer 1:</label>
+            <input type='number' class='property-input' step='0.0001' />
+            <button class='property-apply-button'>Apply</button>
+        </div>
     </div>
     <div id='cloudiness-layer-2-property'>
-        <label>Cloudiness layer 2:</label>
-        <input type='number' class='property-input' step='0.0001' />
-        <button class='property-apply-button'>Set Cloudiness Layer 2</button>
+        <div class='property-controls'>
+            <label>Cloudiness layer 2:</label>
+            <input type='number' class='property-input' step='0.0001' />
+            <button class='property-apply-button'>Apply</button>
+        </div>
         <span class='missing-value-warning'>
             Value is missing in .level file.
             Change value in editor to update level file.
         </span>
     </div>
     <div id='fog-density-property'>
-        <label>Fog Density:</label>
-        <input type='number' class='property-input' step='0.0001' />
-        <button class='property-apply-button'>Set Fog</button>
+        <div class='property-controls'>
+            <label>Fog Density:</label>
+            <input type='number' class='property-input' step='0.0001' />
+            <button class='property-apply-button'>Apply</button>
+        </div>
         <span class='missing-value-warning'>
             Value is missing in .level file.
             Change value in editor to update level file.
         </span>
     </div>
     <div id='music-property'>
-        <label>Music:</label>
-        <select class='property-input'>
-            <option>None</option>
-            <option>Rome</option>
-            <option>Medieval</option>
-            <option>Egypt</option>
-            <option>Wood</option>
-        </select>
-        <button class='property-apply-button'>Set Music</button>
+        <div class='property-controls'>
+            <label>Music:</label>
+            <select class='property-input'>
+                <option>None</option>
+                <option>Rome</option>
+                <option>Medieval</option>
+                <option>Egypt</option>
+                <option>Wood</option>
+            </select>
+            <button class='property-apply-button'>Apply</button>
+        </div>
     </div>
     <div id='terrain-property'>
-        <label>Terrain:</label>
-        <select class='property-input'>
-            <option>Rome</option>
-            <option>Medieval</option>
-            <option>Egypt</option>
-            <option>Wood</option>
-        </select>
-        <button class='property-apply-button'>Set Terrain</button>
+        <div class='property-controls'>
+            <label>Terrain:</label>
+            <select class='property-input'>
+                <option>Rome</option>
+                <option>Medieval</option>
+                <option>Egypt</option>
+                <option>Wood</option>
+            </select>
+            <button class='property-apply-button'>Apply</button>
+        </div>
     </div>
     <div id='vegetation-property'>
-        <label>Vegetation:</label>
-        <select class='property-input'>
-            <option>None</option>
-            <option>Rome</option>
-            <option>Medieval</option>
-            <option>Egypt</option>
-            <option>Wood</option>
-        </select>
-        <button class='property-apply-button'>Set Vegetation</button>
+        <div class='property-controls'>
+            <label>Vegetation:</label>
+            <select class='property-input'>
+                <option>None</option>
+                <option>Rome</option>
+                <option>Medieval</option>
+                <option>Egypt</option>
+                <option>Wood</option>
+            </select>
+            <button class='property-apply-button'>Apply</button>
+        </div>
     </div>
     <button id='download-button'>Download</button>
 </div>
