@@ -13,21 +13,25 @@ export default class LevelFile {
 
     static LEVEL_ENVIRONMENT_OPTIONS = {
         Rome: {
+            name: 'Rome',
             music: 'Rome',
             terrain: '/Game/MapEditor/Materials/MI_EditorGround_Rome.MI_EditorGround_Rome',
             vegEnum: 'E_ModelEnvironment::NewEnumerator1',
         },
         Medieval: {
+            name: 'Medieval',
             music: 'Medieval',
             terrain: '/Game/MapEditor/Materials/MI_EditorGround_Medieval.MI_EditorGround_Medieval',
             vegEnum: 'E_ModelEnvironment::NewEnumerator2',
         },
         Egypt: {
+            name: 'Egypt',
             music: 'Egypt',
             terrain: '/Game/MapEditor/Materials/MI_EditorGround_Egypt.MI_EditorGround_Egypt',
             vegEnum: 'E_ModelEnvironment::NewEnumerator0',
         },
         Wood: {
+            name: 'Wood',
             music: 'Wood',
             terrain: '/Game/MapEditor/Materials/MI_EditorGround_Wood.MI_EditorGround_Wood',
             vegEnum: 'E_ModelEnvironment::NewEnumerator4',
@@ -60,25 +64,15 @@ export default class LevelFile {
     }
 
     getTerrain() {
-        for (const [key, cfg] of Object.entries(LevelFile.LEVEL_ENVIRONMENT_OPTIONS)) {
-            if (this.file.findStringOffset(cfg.terrain) >= 0) {
-                return key;
-            }
-        }
+        const terrainPath = this.file.readString(this.getTerrainOffset());
 
-        return null;
+        return this.#findLevelEnvironment(config => config.terrain === terrainPath).name;
     }
 
     getTerrainOffset() {
-        for (const [key, cfg] of Object.entries(LevelFile.LEVEL_ENVIRONMENT_OPTIONS)) {
-            const offset = this.file.findStringOffset(cfg.terrain);
+        const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.terrain);
 
-            if (offset >= 0) {
-                return offset;
-            }
-        }
-
-        return null;
+        return this.file.findOffsetOfAnyString(vegetationEnumNames);
     }
 
     setTerrain(name) {
@@ -91,25 +85,15 @@ export default class LevelFile {
     }
 
     getVegetation() {
-        for (const [key, cfg] of Object.entries(LevelFile.LEVEL_ENVIRONMENT_OPTIONS)) {
-            if (this.file.findStringOffset(cfg.vegEnum) >= 0) {
-                return key;
-            }
-        }
+        const vegetationPath = this.file.readString(this.getVegetationOffset());
 
-        return null;
+        return this.#findLevelEnvironment(config => config.vegEnum === vegetationPath).name;
     }
 
     getVegetationOffset() {
-        for (const [key, cfg] of Object.entries(LevelFile.LEVEL_ENVIRONMENT_OPTIONS)) {
-            const offset = this.file.findStringOffset(cfg.vegEnum);
+        const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.vegEnum);
 
-            if (offset >= 0) {
-                return offset;
-            }
-        }
-
-        return null;
+        return this.file.findOffsetOfAnyString(vegetationEnumNames);
     }
 
     setVegetation(name) {
@@ -123,6 +107,18 @@ export default class LevelFile {
 
     getArrayBuffer() {
         return this.file.getArrayBuffer();
+    }
+
+    #getLevelEnvironmentConfigsAsArray() {
+        return Object.values(LevelFile.LEVEL_ENVIRONMENT_OPTIONS);
+    }
+
+    #findLevelEnvironment(callback) {
+        for (const config of this.#getLevelEnvironmentConfigsAsArray()) {
+            if (callback(config)) {
+                return config;
+            }
+        }
     }
 
     #getLevelEnvironmentConfig(name, key = null) {

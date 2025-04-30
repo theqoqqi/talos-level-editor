@@ -12,6 +12,18 @@ export default class UnrealEngineFile {
         );
     }
 
+    findOffsetOfAnyString(strings) {
+        for (const string of strings) {
+            const offset = this.findStringOffset(string);
+
+            if (offset >= 0) {
+                return offset;
+            }
+        }
+
+        return null;
+    }
+
     findStringOffset(string) {
         const encoder = new TextEncoder();
         const bytes = encoder.encode(string + '\x00');
