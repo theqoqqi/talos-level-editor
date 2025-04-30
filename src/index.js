@@ -1,6 +1,6 @@
-import LevelFile from './LevelFile.js';
-import NumberPropertyEditor from './NumberPropertyEditor.js';
-import EnumPropertyEditor from './EnumPropertyEditor.js';
+import LevelFile from './files/LevelFile.js';
+import NumberPropertyEditor from './editors/NumberPropertyEditor.js';
+import EnumPropertyEditor from './editors/EnumPropertyEditor.js';
 
 const ui = {
     fileInput: document.getElementById('file-input'),
