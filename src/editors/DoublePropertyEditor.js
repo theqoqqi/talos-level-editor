@@ -6,6 +6,10 @@ export default class DoublePropertyEditor extends PropertyEditor {
         super(opts);
     }
 
+    getValue() {
+        return +this.input.value;
+    }
+
     isInputValueValid() {
         return !isNaN(this.getValue());
     }
