@@ -87,66 +87,6 @@ export default class LevelFile {
         }));
     }
 
-    hasWidth() {
-        return this.width.exists();
-    }
-
-    getWidth() {
-        return this.width.get();
-    }
-
-    setWidth(value) {
-        this.width.set(value);
-    }
-
-    hasHeight() {
-        return this.height.exists();
-    }
-
-    getHeight() {
-        return this.height.get();
-    }
-
-    setHeight(value) {
-        this.height.set(value);
-    }
-
-    hasFogDensity() {
-        return this.fogDensity.exists();
-    }
-
-    getFogDensity() {
-        return this.fogDensity.get();
-    }
-
-    setFogDensity(value) {
-        this.fogDensity.set(value);
-    }
-
-    getMusic() {
-        return this.music.get();
-    }
-
-    setMusic(name) {
-        this.music.set(name);
-    }
-
-    getTerrain() {
-        return this.terrain.get();
-    }
-
-    setTerrain(name) {
-        this.terrain.set(name);
-    }
-
-    getVegetation() {
-        return this.vegetation.get();
-    }
-
-    setVegetation(name) {
-        this.vegetation.set(name);
-    }
-
     getArrayBuffer() {
         return this.file.getArrayBuffer();
     }
