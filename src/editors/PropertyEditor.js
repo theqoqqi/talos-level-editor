@@ -45,10 +45,14 @@ export default class PropertyEditor {
 
                 this.button.textContent = 'Applied';
 
-                this.button.addEventListener('mouseleave', () => {
+                const listener = () => {
                     this.button.textContent = 'Apply';
                     this.button.disabled = true;
-                });
+
+                    this.button.removeEventListener('mouseleave', listener);
+                };
+
+                this.button.addEventListener('mouseleave', listener);
             } catch (e) {
                 alert(e.message);
             }
