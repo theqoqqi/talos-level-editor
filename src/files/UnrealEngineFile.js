@@ -53,6 +53,10 @@ export default class UnrealEngineFile {
     }
 
     getValueOffset(headerHex) {
+        if (typeof headerHex === 'number') {
+            return headerHex;
+        }
+
         const headerBytes = UnrealEngineFile.parseBytes(headerHex);
         const pos = this.findOffset(headerBytes);
 
