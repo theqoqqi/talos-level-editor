@@ -33,7 +33,17 @@ export default class PropertyEditor {
 
             const value = this.getValue();
 
-            this.writeToLevel(value);
+            try {
+                this.writeToLevel(value);
+
+                this.button.textContent = 'Applied';
+
+                this.button.addEventListener('mouseleave', () => {
+                    this.button.textContent = 'Apply';
+                });
+            } catch (e) {
+                alert(e.message);
+            }
         });
     }
 
