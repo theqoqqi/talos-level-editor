@@ -49,6 +49,10 @@ export default class LevelFile {
         }
     };
 
+    hasWidth() {
+        return this.file.containsHeader(LevelFile.TILES_X_HEADER);
+    }
+
     getWidth() {
         return this.file.readInteger(LevelFile.TILES_X_HEADER);
     }
@@ -57,12 +61,20 @@ export default class LevelFile {
         this.file.writeInteger(LevelFile.TILES_X_HEADER, value);
     }
 
+    hasHeight() {
+        return this.file.containsHeader(LevelFile.TILES_Y_HEADER);
+    }
+
     getHeight() {
         return this.file.readInteger(LevelFile.TILES_Y_HEADER);
     }
 
     setHeight(value) {
         this.file.writeInteger(LevelFile.TILES_Y_HEADER, value);
+    }
+
+    hasFogDensity() {
+        return this.file.containsHeader(LevelFile.FOG_DENSITY_HEADER);
     }
 
     getFogDensity() {
