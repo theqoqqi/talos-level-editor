@@ -25,6 +25,21 @@ h1 {
     color: #2c3e50;
 }
 
+.repo-link {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.repo-link a {
+    color: #409eff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.repo-link a:hover {
+    text-decoration: underline;
+}
+
 /* File input */
 /* Стили для красивого file-input */
 #file-input {
