@@ -91,6 +91,18 @@ export default class UnrealEngineFile {
         this.view.setFloat32(offset, value, true);
     }
 
+    readDouble(headerHex) {
+        const offset = this.getValueOffset(headerHex);
+
+        return this.view.getFloat64(offset, true);
+    }
+
+    writeDouble(headerHex, value) {
+        const offset = this.getValueOffset(headerHex);
+
+        this.view.setFloat64(offset, value, true);
+    }
+
     readStringByHeader(headerHex, shift = 0) {
         const offset = this.getValueOffset(headerHex) + shift;
 
