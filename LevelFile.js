@@ -51,15 +51,10 @@ export default class LevelFile {
     }
 
     setLevelMusic(name) {
-        const cfg = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[name];
-
-        if (!cfg) {
-            throw new Error('Unknown music option: ' + name);
-        }
-
+        const config = this.#getLevelEnvironmentConfig(name);
         const offset = this.file.getValueOffset(LevelFile.HDR_MUSIC) + 5;
 
-        this.#replaceStringWithAdjustments(offset, cfg.music, this.#createStringAdjustOffsets([
+        this.#replaceStringWithAdjustments(offset, config.music, this.#createStringAdjustOffsets([
             offset - 5,
         ]));
     }
@@ -87,15 +82,10 @@ export default class LevelFile {
     }
 
     setTerrain(name) {
-        const cfg = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[name];
-
-        if (!cfg) {
-            throw new Error('Unknown terrain option: ' + name);
-        }
-
+        const config = this.#getLevelEnvironmentConfig(name);
         const offset = this.getTerrainOffset();
 
-        this.#replaceStringWithAdjustments(offset, cfg.terrain, this.#createStringAdjustOffsets([
+        this.#replaceStringWithAdjustments(offset, config.terrain, this.#createStringAdjustOffsets([
             offset - 6,
         ]));
     }
@@ -123,21 +113,30 @@ export default class LevelFile {
     }
 
     setVegetation(name) {
-        const cfg = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[name];
-
-        if (!cfg) {
-            throw new Error('Unknown vegetation option: ' + name);
-        }
-
+        const config = this.#getLevelEnvironmentConfig(name);
         const offset = this.getVegetationOffset();
 
-        this.#replaceStringWithAdjustments(offset, cfg.vegEnum, this.#createStringAdjustOffsets([
+        this.#replaceStringWithAdjustments(offset, config.vegEnum, this.#createStringAdjustOffsets([
             offset - 5,
         ]));
     }
 
     getArrayBuffer() {
         return this.file.getArrayBuffer();
+    }
+
+    #getLevelEnvironmentConfig(name, key = null) {
+        const config = LevelFile.LEVEL_ENVIRONMENT_OPTIONS[name];
+
+        if (!config) {
+            throw new Error('Unknown level environment: ' + name);
+        }
+
+        if (key) {
+            return config[key];
+        }
+
+        return config;
     }
 
     #replaceStringWithAdjustments(offset, replacement, adjustOffsets) {
