@@ -1,9 +1,80 @@
 import UnrealEngineFile from './UnrealEngineFile.js';
+import IntegerProperty from '../properties/IntegerProperty.js';
+import FloatProperty from '../properties/FloatProperty.js';
+import EnumProperty from '../properties/EnumProperty.js';
 
 export default class LevelFile {
 
     constructor(arrayBuffer) {
         this.file = new UnrealEngineFile(arrayBuffer);
+
+        this.width = new IntegerProperty(this.file, {
+            header: LevelFile.TILES_X_HEADER,
+            defaultValue: 2
+        });
+
+        this.height = new IntegerProperty(this.file, {
+            header: LevelFile.TILES_Y_HEADER,
+            defaultValue: 2
+        });
+
+        this.fogDensity = new FloatProperty(this.file, {
+            header: LevelFile.FOG_DENSITY_HEADER,
+            defaultValue: 0
+        });
+
+        this.music = new EnumProperty(this.file, {
+            header: LevelFile.MUSIC_HEADER,
+            shift: 5,
+            reader: offset => this.file.readString(offset, 'None'),
+            writer: (offset, value) => {
+                const config = this.#getLevelEnvironmentConfig(value);
+
+                this.#replaceStringWithAdjustments(offset, config.musicName, this.#createStringAdjustOffsets([
+                    offset - 5,
+                ]));
+            },
+        });
+
+        this.terrain = new EnumProperty(this.file, {
+            offsetGetter: () => {
+                const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.terrainPath);
+
+                return this.file.findOffsetOfAnyString(vegetationEnumNames);
+            },
+            reader: offset => {
+                const terrainPath = this.file.readString(offset, null);
+
+                return this.#findLevelEnvironment(config => config.terrainPath === terrainPath)?.name;
+            },
+            writer: (offset, value) => {
+                const config = this.#getLevelEnvironmentConfig(value);
+
+                this.#replaceStringWithAdjustments(offset, config.terrainPath, this.#createStringAdjustOffsets([
+                    offset - 6,
+                ]));
+            },
+        });
+
+        this.vegetation = new EnumProperty(this.file, {
+            offsetGetter: () => {
+                const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.vegetationEnumName);
+
+                return this.file.findOffsetOfAnyString(vegetationEnumNames);
+            },
+            reader: offset => {
+                const vegetationEnumName = this.file.readString(offset, null);
+
+                return this.#findLevelEnvironment(config => config.vegetationEnumName === vegetationEnumName)?.name;
+            },
+            writer: (offset, value) => {
+                const config = this.#getLevelEnvironmentConfig(value);
+
+                this.#replaceStringWithAdjustments(offset, config.vegetationEnumName, this.#createStringAdjustOffsets([
+                    offset - 5,
+                ]));
+            },
+        });
     }
 
     static FOG_DENSITY_HEADER = '0C 00 00 00 46 6F 67 20 44 65 6E 73 69 74 79 00 0E 00 00 00 46 6C 6F 61 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
@@ -50,106 +121,63 @@ export default class LevelFile {
     };
 
     hasWidth() {
-        return this.file.containsHeader(LevelFile.TILES_X_HEADER);
+        return this.width.exists();
     }
 
     getWidth() {
-        if (!this.hasWidth()) {
-            return 2;
-        }
-
-        return this.file.readInteger(LevelFile.TILES_X_HEADER);
+        return this.width.get();
     }
 
     setWidth(value) {
-        this.file.writeInteger(LevelFile.TILES_X_HEADER, value);
+        this.width.set(value);
     }
 
     hasHeight() {
-        return this.file.containsHeader(LevelFile.TILES_Y_HEADER);
+        return this.height.exists();
     }
 
     getHeight() {
-        if (!this.hasHeight()) {
-            return 2;
-        }
-
-        return this.file.readInteger(LevelFile.TILES_Y_HEADER);
+        return this.height.get();
     }
 
     setHeight(value) {
-        this.file.writeInteger(LevelFile.TILES_Y_HEADER, value);
+        this.height.set(value);
     }
 
     hasFogDensity() {
-        return this.file.containsHeader(LevelFile.FOG_DENSITY_HEADER);
+        return this.fogDensity.exists();
     }
 
     getFogDensity() {
-        if (!this.hasFogDensity()) {
-            return 0;
-        }
-
-        return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER);
+        return this.fogDensity.get();
     }
 
     setFogDensity(value) {
-        this.file.writeFloat(LevelFile.FOG_DENSITY_HEADER, value);
+        this.fogDensity.set(value);
     }
 
     getMusic() {
-        return this.file.readStringByHeader(LevelFile.MUSIC_HEADER, 5);
+        return this.music.get();
     }
 
     setMusic(name) {
-        const config = this.#getLevelEnvironmentConfig(name);
-        const offset = this.file.getValueOffset(LevelFile.MUSIC_HEADER) + 5;
-
-        this.#replaceStringWithAdjustments(offset, config.musicName, this.#createStringAdjustOffsets([
-            offset - 5,
-        ]));
+        this.music.set(name);
     }
 
     getTerrain() {
-        const terrainPath = this.file.readString(this.getTerrainOffset(), null);
-
-        return this.#findLevelEnvironment(config => config.terrainPath === terrainPath)?.name;
-    }
-
-    getTerrainOffset() {
-        const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.terrainPath);
-
-        return this.file.findOffsetOfAnyString(vegetationEnumNames);
+        return this.terrain.get();
     }
 
     setTerrain(name) {
-        const config = this.#getLevelEnvironmentConfig(name);
-        const offset = this.getTerrainOffset();
-
-        this.#replaceStringWithAdjustments(offset, config.terrainPath, this.#createStringAdjustOffsets([
-            offset - 6,
-        ]));
+        this.terrain.set(name);
     }
 
     getVegetation() {
-        const vegetationPath = this.file.readString(this.getVegetationOffset(), null);
-
-        return this.#findLevelEnvironment(config => config.vegetationEnumName === vegetationPath)?.name;
-    }
-
-    getVegetationOffset() {
-        const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.vegetationEnumName);
-
-        return this.file.findOffsetOfAnyString(vegetationEnumNames);
+        return this.vegetation.get();
     }
 
     setVegetation(name) {
-        const config = this.#getLevelEnvironmentConfig(name);
-        const offset = this.getVegetationOffset();
-
-        this.#replaceStringWithAdjustments(offset, config.vegetationEnumName, this.#createStringAdjustOffsets([
-            offset - 5,
-        ]));
+        this.vegetation.set(name);
     }
 
     getArrayBuffer() {
