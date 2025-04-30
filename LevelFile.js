@@ -71,9 +71,9 @@ export default class LevelFile {
     }
 
     getTerrain() {
-        const terrainPath = this.file.readString(this.getTerrainOffset());
+        const terrainPath = this.file.readString(this.getTerrainOffset(), null);
 
-        return this.#findLevelEnvironment(config => config.terrainPath === terrainPath).name;
+        return this.#findLevelEnvironment(config => config.terrainPath === terrainPath)?.name;
     }
 
     getTerrainOffset() {
@@ -92,9 +92,9 @@ export default class LevelFile {
     }
 
     getVegetation() {
-        const vegetationPath = this.file.readString(this.getVegetationOffset());
+        const vegetationPath = this.file.readString(this.getVegetationOffset(), null);
 
-        return this.#findLevelEnvironment(config => config.vegetationEnumName === vegetationPath).name;
+        return this.#findLevelEnvironment(config => config.vegetationEnumName === vegetationPath)?.name;
     }
 
     getVegetationOffset() {
