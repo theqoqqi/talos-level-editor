@@ -70,54 +70,21 @@ export default class LevelFile {
             header: LevelFile.MUSIC_HEADER,
             shift: 5,
             reader: offset => this.file.readString(offset, 'None'),
-            writer: (offset, value) => {
-                const config = this.#getLevelEnvironmentConfig(value);
-
-                this.#replaceStringWithAdjustments(offset, config.musicName, this.#createStringAdjustOffsets([
-                    offset - 5,
-                ]));
-            },
+            writer: this.#getLevelEnvironmentEnumPropertyWriter({
+                configValueGetter: config => config.musicName,
+                secondaryLengthOffset: 5,
+            }),
         });
 
-        this.terrain = new EnumProperty(this.file, {
-            offsetGetter: () => {
-                const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.terrainPath);
+        this.terrain = new EnumProperty(this.file, this.#getLevelEnvironmentEnumPropertyOptions({
+            configValueGetter: config => config.terrainPath,
+            secondaryLengthOffset: 6,
+        }));
 
-                return this.file.findOffsetOfAnyString(vegetationEnumNames);
-            },
-            reader: offset => {
-                const terrainPath = this.file.readString(offset, null);
-
-                return this.#findLevelEnvironment(config => config.terrainPath === terrainPath)?.name;
-            },
-            writer: (offset, value) => {
-                const config = this.#getLevelEnvironmentConfig(value);
-
-                this.#replaceStringWithAdjustments(offset, config.terrainPath, this.#createStringAdjustOffsets([
-                    offset - 6,
-                ]));
-            },
-        });
-
-        this.vegetation = new EnumProperty(this.file, {
-            offsetGetter: () => {
-                const vegetationEnumNames = this.#getLevelEnvironmentConfigsAsArray().map(cfg => cfg.vegetationEnumName);
-
-                return this.file.findOffsetOfAnyString(vegetationEnumNames);
-            },
-            reader: offset => {
-                const vegetationEnumName = this.file.readString(offset, null);
-
-                return this.#findLevelEnvironment(config => config.vegetationEnumName === vegetationEnumName)?.name;
-            },
-            writer: (offset, value) => {
-                const config = this.#getLevelEnvironmentConfig(value);
-
-                this.#replaceStringWithAdjustments(offset, config.vegetationEnumName, this.#createStringAdjustOffsets([
-                    offset - 5,
-                ]));
-            },
-        });
+        this.vegetation = new EnumProperty(this.file, this.#getLevelEnvironmentEnumPropertyOptions({
+            configValueGetter: config => config.vegetationEnumName,
+            secondaryLengthOffset: 5,
+        }));
     }
 
     hasWidth() {
@@ -182,6 +149,37 @@ export default class LevelFile {
 
     getArrayBuffer() {
         return this.file.getArrayBuffer();
+    }
+
+    #getLevelEnvironmentEnumPropertyOptions({ configValueGetter, secondaryLengthOffset }) {
+        return {
+            offsetGetter: () => {
+                const configs = this.#getLevelEnvironmentConfigsAsArray();
+                const possibleValues = configs.map(configValueGetter);
+
+                return this.file.findOffsetOfAnyString(possibleValues);
+            },
+            reader: offset => {
+                const value = this.file.readString(offset, null);
+                const predicate = config => configValueGetter(config) === value;
+                const foundConfig = this.#findLevelEnvironment(predicate);
+
+                return foundConfig?.name;
+            },
+            writer: this.#getLevelEnvironmentEnumPropertyWriter({ configValueGetter, secondaryLengthOffset }),
+        };
+    }
+
+    #getLevelEnvironmentEnumPropertyWriter({ configValueGetter, secondaryLengthOffset }) {
+        return (offset, value) => {
+            const config = this.#getLevelEnvironmentConfig(value);
+            const configValue = configValueGetter(config);
+            const adjustOffsets = this.#createStringAdjustOffsets([
+                offset - secondaryLengthOffset,
+            ]);
+
+            this.#replaceStringWithAdjustments(offset, configValue, adjustOffsets);
+        };
     }
 
     #getLevelEnvironmentConfigsAsArray() {
