@@ -40,4 +40,4 @@ No software installation is required — everything runs right in your browser.
 
 **Enjoy customizing your levels with ease!**
 
-Questions or feedback? Feel free to open an issue or contact me in discord.
+Questions or feedback? Feel free to open an issue or leave a comment under [this Discord post](https://discord.com/channels/464411560563965953/1367155635317248020).
