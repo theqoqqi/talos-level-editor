@@ -1,3 +1,6 @@
+
+[![ru](https://img.shields.io/badge/lang-русский-blue.svg)](README.ru.md)
+
 # Talos .level Editor
 
 Welcome to the **Talos .level Editor**, a simple web app that lets you modify
