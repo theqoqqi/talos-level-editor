@@ -2,16 +2,16 @@ import LevelFile from './LevelFile.js';
 
 const ui = {
     fileInput: document.getElementById('fileInput'),
-    controls: document.getElementById('controls'),
-    fog: document.getElementById('fogDensity'),
-    music: document.getElementById('levelMusic'),
-    terrain: document.getElementById('terrainSelect'),
-    veg: document.getElementById('vegSelect'),
-    btnFog: document.getElementById('updateFogBtn'),
-    btnMusic: document.getElementById('updateMusicBtn'),
-    btnTerrain: document.getElementById('updateTerrainBtn'),
-    btnVeg: document.getElementById('updateVegBtn'),
-    btnDownload: document.getElementById('downloadAllBtn')
+    controlsContainer: document.getElementById('controls'),
+    fogDensityInput: document.getElementById('fogDensity'),
+    musicSelect: document.getElementById('levelMusic'),
+    terrainSelect: document.getElementById('terrainSelect'),
+    vegetationSelect: document.getElementById('vegSelect'),
+    setFogButton: document.getElementById('updateFogBtn'),
+    setMusicButton: document.getElementById('updateMusicBtn'),
+    setTerrainButton: document.getElementById('updateTerrainBtn'),
+    setVegetationButton: document.getElementById('updateVegBtn'),
+    downloadButton: document.getElementById('downloadAllBtn')
 };
 
 let levelFile;
@@ -25,30 +25,30 @@ ui.fileInput.addEventListener('change', async e => {
 
     levelFile = new LevelFile(await file.arrayBuffer());
 
-    ui.fog.value = levelFile.getFogDensity().toFixed(4);
-    ui.music.value = levelFile.getMusic();
-    ui.terrain.value = levelFile.getTerrain();
-    ui.veg.value = levelFile.getVegetation();
+    ui.fogDensityInput.value = levelFile.getFogDensity().toFixed(4);
+    ui.musicSelect.value = levelFile.getMusic();
+    ui.terrainSelect.value = levelFile.getTerrain();
+    ui.vegetationSelect.value = levelFile.getVegetation();
 
-    ui.fog.toggleAttribute('disabled', +ui.fog.value === 0);
-    ui.btnFog.toggleAttribute('disabled', +ui.fog.value === 0);
+    ui.fogDensityInput.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
+    ui.setFogButton.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
 
-    ui.controls.style.display = 'block';
+    ui.controlsContainer.style.display = 'block';
 });
 
-ui.btnFog.addEventListener('click', () => {
-    const v = parseFloat(ui.fog.value);
+ui.setFogButton.addEventListener('click', () => {
+    const v = parseFloat(ui.fogDensityInput.value);
 
     if (!isNaN(v)) {
         levelFile.setFogDensity(v);
     }
 });
 
-ui.btnMusic.addEventListener('click', () => levelFile.setMusic(ui.music.value));
-ui.btnTerrain.addEventListener('click', () => levelFile.setTerrain(ui.terrain.value));
-ui.btnVeg.addEventListener('click', () => levelFile.setVegetation(ui.veg.value));
+ui.setMusicButton.addEventListener('click', () => levelFile.setMusic(ui.musicSelect.value));
+ui.setTerrainButton.addEventListener('click', () => levelFile.setTerrain(ui.terrainSelect.value));
+ui.setVegetationButton.addEventListener('click', () => levelFile.setVegetation(ui.vegetationSelect.value));
 
-ui.btnDownload.addEventListener('click', () => {
+ui.downloadButton.addEventListener('click', () => {
     const blob = new Blob([levelFile.getArrayBuffer()], { type: 'application/octet-stream' });
     const a = document.createElement('a');
 
