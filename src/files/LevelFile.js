@@ -78,11 +78,11 @@ export default class LevelFile {
     }
 
     getFogDensity() {
-        try {
-            return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER);
-        } catch (e) {
+        if (!this.hasFogDensity()) {
             return 0;
         }
+
+        return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER);
     }
 
     setFogDensity(value) {
