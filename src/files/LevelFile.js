@@ -54,6 +54,10 @@ export default class LevelFile {
     }
 
     getWidth() {
+        if (!this.hasWidth()) {
+            return 2;
+        }
+
         return this.file.readInteger(LevelFile.TILES_X_HEADER);
     }
 
@@ -66,6 +70,10 @@ export default class LevelFile {
     }
 
     getHeight() {
+        if (!this.hasHeight()) {
+            return 2;
+        }
+
         return this.file.readInteger(LevelFile.TILES_Y_HEADER);
     }
 
