@@ -63,20 +63,21 @@ export default class UnrealEngineFile {
         return pos + headerBytes.length;
     }
 
-    readFloat(headerHex, shift = 1) {
-        const offset = this.getValueOffset(headerHex) + shift;
+    readFloat(headerHex) {
+        const offset = this.getValueOffset(headerHex);
 
         return this.view.getFloat32(offset, true);
     }
 
-    writeFloat(headerHex, value, shift = 1) {
-        const offset = this.getValueOffset(headerHex) + shift;
+    writeFloat(headerHex, value) {
+        const offset = this.getValueOffset(headerHex);
 
         this.view.setFloat32(offset, value, true);
     }
 
     readStringByHeader(headerHex, shift = 0) {
         const offset = this.getValueOffset(headerHex) + shift;
+
         return this.readString(offset);
     }
 

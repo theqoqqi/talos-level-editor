@@ -47,14 +47,14 @@ export default class LevelFile {
 
     getFogDensity() {
         try {
-            return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER, 0);
+            return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER);
         } catch (e) {
             return 0;
         }
     }
 
     setFogDensity(value) {
-        this.file.writeFloat(LevelFile.FOG_DENSITY_HEADER, value, 0);
+        this.file.writeFloat(LevelFile.FOG_DENSITY_HEADER, value);
     }
 
     getMusic() {
