@@ -13,6 +13,12 @@ export default class LevelFile {
     static ACTOR_PROPS_HEADER = '41 63 74 6F 72 50 72 6F 70 65 72 74 69 65 73 00 0E 00 00 00 41 72 72 61 79 50 72 6F 70 65 72 74 79 00 01 00 00 00 0D 00 00 00 42 79 74 65 50 72 6F 70 65 72 74 79 00 00 00 00 00';
 
     static LEVEL_ENVIRONMENT_OPTIONS = {
+        None: {
+            name: 'None',
+            musicName: 'None',
+            terrainPath: null,
+            vegetationEnumName: 'E_ModelEnvironment::NewEnumerator9',
+        },
         Rome: {
             name: 'Rome',
             musicName: 'Rome',
