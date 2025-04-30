@@ -106,7 +106,7 @@ export default class UnrealEngineFile {
         }
 
         if (defaultValue === undefined) {
-            throw new Error('Invalid string: missing null terminator');
+            throw new Error(`Invalid string at 0x${offset.toString(16)}: missing null terminator`);
         }
 
         return defaultValue;
