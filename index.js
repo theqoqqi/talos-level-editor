@@ -25,8 +25,8 @@ ui.fileInput.addEventListener('change', async e => {
 
     levelFile = new LevelFile(await file.arrayBuffer());
 
-    ui.fog.value = levelFile.getFog().toFixed(4);
-    ui.music.value = levelFile.getLevelMusic();
+    ui.fog.value = levelFile.getFogDensity().toFixed(4);
+    ui.music.value = levelFile.getMusic();
     ui.terrain.value = levelFile.getTerrain();
     ui.veg.value = levelFile.getVegetation();
 
@@ -40,11 +40,11 @@ ui.btnFog.addEventListener('click', () => {
     const v = parseFloat(ui.fog.value);
 
     if (!isNaN(v)) {
-        levelFile.setFog(v);
+        levelFile.setFogDensity(v);
     }
 });
 
-ui.btnMusic.addEventListener('click', () => levelFile.setLevelMusic(ui.music.value));
+ui.btnMusic.addEventListener('click', () => levelFile.setMusic(ui.music.value));
 ui.btnTerrain.addEventListener('click', () => levelFile.setTerrain(ui.terrain.value));
 ui.btnVeg.addEventListener('click', () => levelFile.setVegetation(ui.veg.value));
 
