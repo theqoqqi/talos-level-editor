@@ -7,7 +7,7 @@ const ui = {
     musicSelect: document.getElementById('level-music-select'),
     terrainSelect: document.getElementById('terrain-select'),
     vegetationSelect: document.getElementById('vegetation-select'),
-    setFogButton: document.getElementById('set-fog-density-button'),
+    setFogDensityButton: document.getElementById('set-fog-density-button'),
     setMusicButton: document.getElementById('set-music-button'),
     setTerrainButton: document.getElementById('set-terrain-button'),
     setVegetationButton: document.getElementById('set-vegetation-button'),
@@ -31,12 +31,12 @@ ui.fileInput.addEventListener('change', async e => {
     ui.vegetationSelect.value = levelFile.getVegetation();
 
     ui.fogDensityInput.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
-    ui.setFogButton.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
+    ui.setFogDensityButton.toggleAttribute('disabled', +ui.fogDensityInput.value === 0);
 
     ui.controlsContainer.style.display = 'block';
 });
 
-ui.setFogButton.addEventListener('click', () => {
+ui.setFogDensityButton.addEventListener('click', () => {
     const v = parseFloat(ui.fogDensityInput.value);
 
     if (!isNaN(v)) {
