@@ -6,7 +6,7 @@ export default class LevelFile {
         this.file = new UnrealEngineFile(arrayBuffer);
     }
 
-    static FOG_DENSITY_HEADER = '0C 00 00 00 46 6F 67 20 44 65 6E 73 69 74 79 00 0E 00 00 00 46 6C 6F 61 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00';
+    static FOG_DENSITY_HEADER = '0C 00 00 00 46 6F 67 20 44 65 6E 73 69 74 79 00 0E 00 00 00 46 6C 6F 61 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
 
     static MUSIC_HEADER = '0B 00 00 00 4C 65 76 65 6C 4D 75 73 69 63 00 0C 00 00 00 53 74 72 50 72 6F 70 65 72 74 79 00 00 00 00 00';
 
@@ -47,14 +47,14 @@ export default class LevelFile {
 
     getFogDensity() {
         try {
-            return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER);
+            return this.file.readFloat(LevelFile.FOG_DENSITY_HEADER, 0);
         } catch (e) {
             return 0;
         }
     }
 
     setFogDensity(value) {
-        this.file.writeFloat(LevelFile.FOG_DENSITY_HEADER, value);
+        this.file.writeFloat(LevelFile.FOG_DENSITY_HEADER, value, 0);
     }
 
     getMusic() {
