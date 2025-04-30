@@ -7,6 +7,7 @@ export default class PropertyEditor {
         this.container = document.getElementById(container) || container;
         this.input = this.container.querySelector('.property-input');
         this.button = this.container.querySelector('.property-apply-button');
+        this.warning = this.container.querySelector('.missing-value-warning');
         this.#propertyGetter = propertyGetter;
         this._bindApply();
     }
@@ -18,6 +19,10 @@ export default class PropertyEditor {
         this.setValue(value);
         this.input.toggleAttribute('disabled', disabled);
         this.button.toggleAttribute('disabled', disabled);
+
+        if (this.warning) {
+            this.warning.style.display = disabled ? 'block' : 'none';
+        }
     }
 
     _bindApply() {
