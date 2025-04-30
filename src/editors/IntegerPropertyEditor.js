@@ -1,6 +1,6 @@
 import PropertyEditor from './PropertyEditor.js';
 
-export default class FloatPropertyEditor extends PropertyEditor {
+export default class IntegerPropertyEditor extends PropertyEditor {
 
     constructor(opts) {
         super(opts);
