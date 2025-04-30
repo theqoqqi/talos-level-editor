@@ -63,6 +63,18 @@ export default class UnrealEngineFile {
         return pos + headerBytes.length;
     }
 
+    readInteger(headerHex) {
+        const offset = this.getValueOffset(headerHex);
+
+        return this.view.getUint32(offset, true);
+    }
+
+    writeInteger(headerHex, value) {
+        const offset = this.getValueOffset(headerHex);
+
+        this.view.setUint32(offset, value, true);
+    }
+
     readFloat(headerHex) {
         const offset = this.getValueOffset(headerHex);
 
