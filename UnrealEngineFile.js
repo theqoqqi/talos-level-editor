@@ -138,6 +138,10 @@ export default class UnrealEngineFile {
         this.insertString(offset, replacement);
     }
 
+    containsHeader(headerHex) {
+        return this.findOffset(UnrealEngineFile.parseBytes(headerHex)) >= 0;
+    }
+
     modifyInteger(pos, delta) {
         const old = this.view.getUint32(pos, true);
 
