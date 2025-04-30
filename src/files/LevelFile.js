@@ -2,10 +2,15 @@ import UnrealEngineFile from './UnrealEngineFile.js';
 import IntegerProperty from '../properties/IntegerProperty.js';
 import FloatProperty from '../properties/FloatProperty.js';
 import EnumProperty from '../properties/EnumProperty.js';
+import DoubleProperty from '../properties/DoubleProperty.js';
 
 export default class LevelFile {
 
     static FOG_DENSITY_HEADER = '0C 00 00 00 46 6F 67 20 44 65 6E 73 69 74 79 00 0E 00 00 00 46 6C 6F 61 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
+
+    static CLOUDINESS_LAYER_1_HEADER = '13 00 00 00 43 6C 6F 75 64 69 6E 65 73 73 20 4C 61 79 65 72 20 31 00 0E 00 00 00 46 6C 6F 61 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
+
+    static CLOUDINESS_LAYER_2_HEADER = '13 00 00 00 43 6C 6F 75 64 69 6E 65 73 73 20 4C 61 79 65 72 20 32 00 0F 00 00 00 44 6F 75 62 6C 65 50 72 6F 70 65 72 74 79 00 00 00 00 00 08 00 00 00 00';
 
     static MUSIC_HEADER = '0B 00 00 00 4C 65 76 65 6C 4D 75 73 69 63 00 0C 00 00 00 53 74 72 50 72 6F 70 65 72 74 79 00 00 00 00 00';
 
@@ -63,6 +68,16 @@ export default class LevelFile {
 
         this.fogDensity = new FloatProperty(this.file, {
             header: LevelFile.FOG_DENSITY_HEADER,
+            defaultValue: 0
+        });
+
+        this.cloudinessLayer1 = new FloatProperty(this.file, {
+            header: LevelFile.CLOUDINESS_LAYER_1_HEADER,
+            defaultValue: 0
+        });
+
+        this.cloudinessLayer2 = new DoubleProperty(this.file, {
+            header: LevelFile.CLOUDINESS_LAYER_2_HEADER,
             defaultValue: 0
         });
 

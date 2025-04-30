@@ -2,6 +2,7 @@ import LevelFile from './files/LevelFile.js';
 import FloatPropertyEditor from './editors/FloatPropertyEditor.js';
 import IntegerPropertyEditor from './editors/IntegerPropertyEditor.js';
 import EnumPropertyEditor from './editors/EnumPropertyEditor.js';
+import DoublePropertyEditor from './editors/DoublePropertyEditor.js';
 
 const ui = {
     fileInput: document.getElementById('file-input'),
@@ -22,6 +23,18 @@ const levelPropertyEditors = [
         input: 'terrain-height',
         button: 'set-level-size-y-button',
         propertyGetter: level => level.height,
+    }),
+
+    new FloatPropertyEditor({
+        input: 'cloudiness-layer-1',
+        button: 'set-cloudiness-layer-1-button',
+        propertyGetter: level => level.cloudinessLayer1,
+    }),
+
+    new DoublePropertyEditor({
+        input: 'cloudiness-layer-2',
+        button: 'set-cloudiness-layer-2-button',
+        propertyGetter: level => level.cloudinessLayer2,
     }),
 
     new FloatPropertyEditor({
