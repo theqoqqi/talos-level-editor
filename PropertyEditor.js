@@ -5,11 +5,14 @@ export default class PropertyEditor {
 
     #writer;
 
-    constructor({ input, button, reader, writer }) {
+    #availabilityChecker;
+
+    constructor({ input, button, reader, writer, availabilityChecker }) {
         this.input = document.getElementById(input) || input;
         this.button = document.getElementById(button) || button;
         this.#reader = reader;
         this.#writer = writer;
+        this.#availabilityChecker = availabilityChecker ?? (() => true);
         this._bindApply();
     }
 
@@ -59,6 +62,6 @@ export default class PropertyEditor {
     }
 
     isUnavailable() {
-        return false;
+        return !this.#availabilityChecker(this.levelFile);
     }
 }
