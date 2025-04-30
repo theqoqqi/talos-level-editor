@@ -12,6 +12,10 @@ export default class LevelFile {
 
     static ACTOR_PROPS_HEADER = '41 63 74 6F 72 50 72 6F 70 65 72 74 69 65 73 00 0E 00 00 00 41 72 72 61 79 50 72 6F 70 65 72 74 79 00 01 00 00 00 0D 00 00 00 42 79 74 65 50 72 6F 70 65 72 74 79 00 00 00 00 00';
 
+    static TILES_X_HEADER = '08 00 00 00 54 69 6C 65 73 20 58 00 0C 00 00 00 49 6E 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
+
+    static TILES_Y_HEADER = '08 00 00 00 54 69 6C 65 73 20 59 00 0C 00 00 00 49 6E 74 50 72 6F 70 65 72 74 79 00 00 00 00 00 04 00 00 00 00';
+
     static LEVEL_ENVIRONMENT_OPTIONS = {
         None: {
             name: 'None',
@@ -44,6 +48,22 @@ export default class LevelFile {
             vegetationEnumName: 'E_ModelEnvironment::NewEnumerator4',
         }
     };
+
+    getWidth() {
+        return this.file.readInteger(LevelFile.TILES_X_HEADER);
+    }
+
+    setWidth(value) {
+        this.file.writeInteger(LevelFile.TILES_X_HEADER, value);
+    }
+
+    getHeight() {
+        return this.file.readInteger(LevelFile.TILES_Y_HEADER);
+    }
+
+    setHeight(value) {
+        this.file.writeInteger(LevelFile.TILES_Y_HEADER, value);
+    }
 
     getFogDensity() {
         try {

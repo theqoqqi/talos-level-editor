@@ -12,6 +12,20 @@ let levelFile;
 
 const levelPropertyEditors = [
     new NumberPropertyEditor({
+        input: 'terrain-width',
+        button: 'set-level-size-x-button',
+        reader: level => level.getWidth(),
+        writer: (level, v) => level.setWidth(v),
+    }),
+
+    new NumberPropertyEditor({
+        input: 'terrain-height',
+        button: 'set-level-size-y-button',
+        reader: level => level.getHeight(),
+        writer: (level, v) => level.setHeight(v),
+    }),
+
+    new NumberPropertyEditor({
         input: 'fog-density',
         button: 'set-fog-density-button',
         reader: level => level.getFogDensity(),

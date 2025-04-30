@@ -15,6 +15,16 @@
 <input type='file' id='file-input' accept='.level' />
 <div id='controls' style='display:none;'>
     <div>
+        <label>Level width:</label>
+        <input type='number' id='terrain-width' step='1' min='0' />
+        <button id='set-level-size-x-button'>Set Terrain Width</button>
+    </div>
+    <div>
+        <label>Level length:</label>
+        <input type='number' id='terrain-height' step='1' min='0' />
+        <button id='set-level-size-y-button'>Set Terrain Height</button>
+    </div>
+    <div>
         <label>Fog Density:</label>
         <input type='number' id='fog-density' step='0.0001' />
         <button id='set-fog-density-button'>Set Fog</button>
