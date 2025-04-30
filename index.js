@@ -1,17 +1,17 @@
 import LevelFile from './LevelFile.js';
 
 const ui = {
-    fileInput: document.getElementById('fileInput'),
+    fileInput: document.getElementById('file-input'),
     controlsContainer: document.getElementById('controls'),
-    fogDensityInput: document.getElementById('fogDensity'),
-    musicSelect: document.getElementById('levelMusic'),
-    terrainSelect: document.getElementById('terrainSelect'),
-    vegetationSelect: document.getElementById('vegSelect'),
-    setFogButton: document.getElementById('updateFogBtn'),
-    setMusicButton: document.getElementById('updateMusicBtn'),
-    setTerrainButton: document.getElementById('updateTerrainBtn'),
-    setVegetationButton: document.getElementById('updateVegBtn'),
-    downloadButton: document.getElementById('downloadAllBtn')
+    fogDensityInput: document.getElementById('fog-density'),
+    musicSelect: document.getElementById('level-music-select'),
+    terrainSelect: document.getElementById('terrain-select'),
+    vegetationSelect: document.getElementById('vegetation-select'),
+    setFogButton: document.getElementById('set-fog-density-button'),
+    setMusicButton: document.getElementById('set-music-button'),
+    setTerrainButton: document.getElementById('set-terrain-button'),
+    setVegetationButton: document.getElementById('set-vegetation-button'),
+    downloadButton: document.getElementById('download-button')
 };
 
 let levelFile;

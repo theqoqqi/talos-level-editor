@@ -12,44 +12,44 @@
 </head>
 <body>
 <h1>Unreal .level Editor</h1>
-<input type="file" id="fileInput" accept=".level" />
+<input type="file" id="file-input" accept=".level" />
 <div id="controls" style="display:none;">
     <div>
         <label>Fog Density:</label>
-        <input type="number" step="0.0001" id="fogDensity" />
-        <button id="updateFogBtn">Set Fog</button>
+        <input type="number" id="fog-density" step="0.0001" />
+        <button id='set-fog-density-button'>Set Fog</button>
     </div>
     <div>
         <label>Music:</label>
-        <select id="levelMusic">
+        <select id="level-music-select">
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="updateMusicBtn">Set Music</button>
+        <button id="set-music-button">Set Music</button>
     </div>
     <div>
         <label>Terrain:</label>
-        <select id="terrainSelect">
+        <select id="terrain-select">
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="updateTerrainBtn">Set Terrain</button>
+        <button id="set-terrain-button">Set Terrain</button>
     </div>
     <div>
         <label>Vegetation:</label>
-        <select id="vegSelect">
+        <select id="vegetation-select">
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="updateVegBtn">Set Vegetation</button>
+        <button id="set-vegetation-button">Set Vegetation</button>
     </div>
-    <button id="downloadAllBtn">Download</button>
+    <button id="download-button">Download</button>
 </div>
 
 <script type="module" src="UnrealEngineFile.js"></script>
