@@ -1,5 +1,6 @@
 import LevelFile from './files/LevelFile.js';
-import NumberPropertyEditor from './editors/NumberPropertyEditor.js';
+import FloatPropertyEditor from './editors/FloatPropertyEditor.js';
+import IntegerPropertyEditor from './editors/IntegerPropertyEditor.js';
 import EnumPropertyEditor from './editors/EnumPropertyEditor.js';
 
 const ui = {
@@ -11,7 +12,7 @@ const ui = {
 let levelFile;
 
 const levelPropertyEditors = [
-    new NumberPropertyEditor({
+    new IntegerPropertyEditor({
         input: 'terrain-width',
         button: 'set-level-size-x-button',
         reader: level => level.getWidth(),
@@ -19,7 +20,7 @@ const levelPropertyEditors = [
         availabilityChecker: level => level.hasWidth(),
     }),
 
-    new NumberPropertyEditor({
+    new IntegerPropertyEditor({
         input: 'terrain-height',
         button: 'set-level-size-y-button',
         reader: level => level.getHeight(),
@@ -27,7 +28,7 @@ const levelPropertyEditors = [
         availabilityChecker: level => level.hasHeight(),
     }),
 
-    new NumberPropertyEditor({
+    new FloatPropertyEditor({
         input: 'fog-density',
         button: 'set-fog-density-button',
         reader: level => level.getFogDensity(),
