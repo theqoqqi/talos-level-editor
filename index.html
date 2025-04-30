@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Unreal .level Editor</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 2rem; }
@@ -12,48 +12,48 @@
 </head>
 <body>
 <h1>Unreal .level Editor</h1>
-<input type="file" id="file-input" accept=".level" />
-<div id="controls" style="display:none;">
+<input type='file' id='file-input' accept='.level' />
+<div id='controls' style='display:none;'>
     <div>
         <label>Fog Density:</label>
-        <input type="number" id="fog-density" step="0.0001" />
+        <input type='number' id='fog-density' step='0.0001' />
         <button id='set-fog-density-button'>Set Fog</button>
     </div>
     <div>
         <label>Music:</label>
-        <select id="level-music-select">
+        <select id='level-music-select'>
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="set-music-button">Set Music</button>
+        <button id='set-music-button'>Set Music</button>
     </div>
     <div>
         <label>Terrain:</label>
-        <select id="terrain-select">
+        <select id='terrain-select'>
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="set-terrain-button">Set Terrain</button>
+        <button id='set-terrain-button'>Set Terrain</button>
     </div>
     <div>
         <label>Vegetation:</label>
-        <select id="vegetation-select">
+        <select id='vegetation-select'>
             <option>Rome</option>
             <option>Medieval</option>
             <option>Egypt</option>
             <option>Wood</option>
         </select>
-        <button id="set-vegetation-button">Set Vegetation</button>
+        <button id='set-vegetation-button'>Set Vegetation</button>
     </div>
-    <button id="download-button">Download</button>
+    <button id='download-button'>Download</button>
 </div>
 
-<script type="module" src="UnrealEngineFile.js"></script>
-<script type="module" src="LevelFile.js"></script>
-<script type="module" src="index.js"></script>
+<script type='module' src='UnrealEngineFile.js'></script>
+<script type='module' src='LevelFile.js'></script>
+<script type='module' src='index.js'></script>
 </body>
 </html>
