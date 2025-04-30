@@ -9,6 +9,7 @@ export default class PropertyEditor {
         this.button = this.container.querySelector('.property-apply-button');
         this.warning = this.container.querySelector('.missing-value-warning');
         this.#propertyGetter = propertyGetter;
+        this._bindInputListener();
         this._bindApply();
     }
 
@@ -18,11 +19,17 @@ export default class PropertyEditor {
 
         this.setValue(value);
         this.input.toggleAttribute('disabled', disabled);
-        this.button.toggleAttribute('disabled', disabled);
+        this.button.toggleAttribute('disabled', true);
 
         if (this.warning) {
             this.warning.style.display = disabled ? 'block' : 'none';
         }
+    }
+
+    _bindInputListener() {
+        this.input.addEventListener('input', () => {
+            this.button.disabled = this.getValue() === this.#getProperty().get();
+        });
     }
 
     _bindApply() {
@@ -40,6 +47,7 @@ export default class PropertyEditor {
 
                 this.button.addEventListener('mouseleave', () => {
                     this.button.textContent = 'Apply';
+                    this.button.disabled = true;
                 });
             } catch (e) {
                 alert(e.message);
