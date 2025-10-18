@@ -22,12 +22,15 @@ There is a short guide provided by **KabanFriend**.
    `/Game/Characters/NPCs/BP_TalosNpc.BP_TalosNpc_C`\
    (Replace `Talos1/Content` with `/Game` & replace `uasset` with `<blueprint name>_C` at the end)
 7. Go back to the level file you found in step 3 and replace bytes starting from `/Game`\
-   (⚠️ Do NOT append/remove any bytes from the file! Changing the file length will make the level file invalid)\
+   (⚠️ Do NOT remove any bytes from the file! Changing the file length can make the level file invalid)\
    ![img3.png](readme-assets/img3.png)
 8. Finally, add byte `00` after the very end of the asset path you pasted\
    ![img4.png](readme-assets/img4.png)
-9. If the name of the blueprint is longer than name of stationary connector,
-   then you'll need to modify the first 4 bytes of the asset path:
-   ![img5.png](readme-assets/img5.png)\
-   This part means a number of characters in next string. You can replace `6c` (it's decimal `107`)
-   with another number that corresponds to the new string's length, taking into account `00` byte at the end.
+
+### Longer Names
+If the name of the blueprint you want to use is longer than name of stationary connector,\
+then you'll need to modify following 4 bytes before the asset path:\
+![img5.png](readme-assets/img5.png)\
+This part means a number of characters in next string.\
+You can replace `6c` (it's decimal `108`) with another number that corresponds\
+to the new string's length, taking into account `00` byte at the end.
